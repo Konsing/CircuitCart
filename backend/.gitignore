@@ -1,0 +1,27 @@
+# Virtual Environment
+env/
+venv/
+*.pyc
+*.pyo
+__pycache__/
+db.sqlite3
+*.sqlite3
+
+# Logs & System Files
+logs/
+*.log
+*.pot
+*.py[co]
+.DS_Store
+Thumbs.db
+
+# Environment Variables & Secrets
+.env
+config.json
+
+# Migrations (Optional: Only exclude if you're using PostgreSQL and don't need migrations history)
+**/migrations/
+
+# Django Cache & Static Files
+staticfiles/
+media/

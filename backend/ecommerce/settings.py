@@ -77,9 +77,9 @@ WSGI_APPLICATION = "ecommerce.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'your_db_name',        # Replace with your database name
-        'USER': 'your_db_user',        # Replace with your database user
-        'PASSWORD': 'your_db_password',# Replace with your database password
+        'NAME': 'circuitcart_db',       # Replace with your database name
+        'USER': 'circuitcart_user',     # Replace with your database user
+        'PASSWORD': '1234',             # Replace with your database password
         'HOST': 'localhost',
         'PORT': '5432',
     }
