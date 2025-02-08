@@ -1,7 +1,7 @@
 
 ---
 
-# ** 🏪 CircuitCart - E-commerce Website for Computer Components & Peripherals**  
+# **🏪 CircuitCart - E-commerce Website for Computer Components & Peripherals**  
 
 Welcome to **CircuitCart**, an e-commerce platform designed for selling **computer components** and **peripherals**. This website consists of a **Django backend** with a **PostgreSQL database** and a **React frontend**, making it a powerful full-stack application.
 
