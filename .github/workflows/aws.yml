@@ -28,7 +28,7 @@ jobs:
         run: docker build -t backend ./backend
 
       - name: Build Frontend Image (Production)
-        run: docker build --target production -t frontend ./frontend
+        run: docker build --target production --build-arg REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }} -t frontend ./frontend
 
       - name: Build Nginx Image (Reverse Proxy)
         run: docker build -t nginx . # Uses the Dockerfile in the repository root
@@ -69,13 +69,13 @@ jobs:
             backend
 
       - name: Run Frontend Container (Production)
+        # Note: At runtime, setting REACT_APP_API_URL here won't affect the already built static files.
         env:
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
         run: |
           docker run -d \
             --name frontend \
             --network app_network \
-            -e REACT_APP_API_URL=${REACT_APP_API_URL} \
             frontend
 
       - name: Run Nginx Container (Reverse Proxy)
