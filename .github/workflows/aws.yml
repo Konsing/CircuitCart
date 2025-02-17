@@ -7,14 +7,14 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
-
+    
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
       - name: Clean up Docker Containers, Images, and Networks
         run: |
-          docker rm -f backend frontend db nginx || true
+          docker rm -f backend frontend nginx db || true
           docker rmi backend frontend nginx || true
           docker network prune --force || true
 
@@ -27,11 +27,11 @@ jobs:
       - name: Build Backend Image
         run: docker build -t backend ./backend
 
-      - name: Build Frontend Image
-        run: docker build -t frontend ./frontend
+      - name: Build Frontend Image (Production)
+        run: docker build --target production -t frontend ./frontend
 
-      - name: Build Nginx Image
-        run: docker build -t nginx .
+      - name: Build Nginx Image (Reverse Proxy)
+        run: docker build -t nginx . # Uses the Dockerfile in the repository root
 
       - name: Run PostgreSQL Container
         env:
@@ -53,9 +53,9 @@ jobs:
           DJANGO_ENV: production
           DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
           DEBUG: "False"
-          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }} # e.g. your-production-domain.com
+          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          CORS_ALLOWED_ORIGINS: ${{ secrets.CORS_ALLOWED_ORIGINS }} # Should be the same domain if needed
+          CORS_ALLOWED_ORIGINS: ${{ secrets.CORS_ALLOWED_ORIGINS }}
         run: |
           docker run -d \
             --name backend \
@@ -68,9 +68,9 @@ jobs:
             -e CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS} \
             backend
 
-      - name: Run Frontend Container
+      - name: Run Frontend Container (Production)
         env:
-          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }} # In production, set this to a relative API path (e.g. /api)
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
         run: |
           docker run -d \
             --name frontend \
@@ -78,7 +78,7 @@ jobs:
             -e REACT_APP_API_URL=${REACT_APP_API_URL} \
             frontend
 
-      - name: Run Nginx Container
+      - name: Run Nginx Container (Reverse Proxy)
         run: |
           docker run -d \
             --name nginx \
