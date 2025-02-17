@@ -1,0 +1,87 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [Walid]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Clean up Docker Containers, Images, and Networks
+        run: |
+          docker rm -f backend frontend db nginx || true
+          docker rmi backend frontend nginx || true
+          docker network prune --force || true
+
+      - name: Create Docker Network
+        run: docker network create app_network || true
+
+      - name: Pull Latest PostgreSQL Image
+        run: docker pull postgres:13
+
+      - name: Build Backend Image
+        run: docker build -t backend ./backend
+
+      - name: Build Frontend Image
+        run: docker build -t frontend ./frontend
+
+      - name: Build Nginx Image
+        run: docker build -f Dockerfile.nginx -t nginx .
+
+      - name: Run PostgreSQL Container
+        env:
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        run: |
+          docker run -d \
+            --name db \
+            --network app_network \
+            -e POSTGRES_DB=${POSTGRES_DB} \
+            -e POSTGRES_USER=${POSTGRES_USER} \
+            -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
+            -v pg_prod_data:/var/lib/postgresql/data \
+            postgres:13
+
+      - name: Run Backend Container
+        env:
+          DJANGO_ENV: production
+          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          DEBUG: "False"
+          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }} # e.g. your-production-domain.com
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          CORS_ALLOWED_ORIGINS: ${{ secrets.CORS_ALLOWED_ORIGINS }} # Should be the same domain if needed
+        run: |
+          docker run -d \
+            --name backend \
+            --network app_network \
+            -e DJANGO_ENV=${DJANGO_ENV} \
+            -e DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY} \
+            -e DEBUG=${DEBUG} \
+            -e ALLOWED_HOSTS=${ALLOWED_HOSTS} \
+            -e DATABASE_URL=${DATABASE_URL} \
+            -e CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS} \
+            backend
+
+      - name: Run Frontend Container
+        env:
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }} # In production, set this to a relative API path (e.g. /api)
+        run: |
+          docker run -d \
+            --name frontend \
+            --network app_network \
+            -e REACT_APP_API_URL=${REACT_APP_API_URL} \
+            frontend
+
+      - name: Run Nginx Container
+        run: |
+          docker run -d \
+            --name nginx \
+            --network app_network \
+            -p 80:80 \
+            nginx
