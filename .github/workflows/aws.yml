@@ -31,7 +31,7 @@ jobs:
         run: docker build -t frontend ./frontend
 
       - name: Build Nginx Image
-        run: docker build -f Dockerfile.nginx -t nginx .
+        run: docker build -t nginx .
 
       - name: Run PostgreSQL Container
         env:
