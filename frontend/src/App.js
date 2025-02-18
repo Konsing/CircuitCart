@@ -6,7 +6,7 @@ function App() {
 
   useEffect(() => {
     // Fetch the backend health endpoint using the environment variable
-    fetch(`${process.env.REACT_APP_API_URL}/health/`)
+    fetch(`${process.env.REACT_APP_API_URL}/health/system_status`)
       .then(response => response.json())
       .then(data => setHealth(data))
       .catch(error => console.error('Error fetching health:', error));

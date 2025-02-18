@@ -1,9 +1,10 @@
+fastapi[standard]
+uvicorn
+passlib[bcrypt]
+sqlalchemy
+python-jose[cryptography]
 boto3
-django
-djangorestframework
-django-cors-headers
-dj-database-url
+python-multipart
 psycopg2-binary
 paypalrestsdk
-python-dotenv
 stripe
