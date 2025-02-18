@@ -8,17 +8,17 @@ router = APIRouter(
     tags=["Auth"]    
 )
 
-
-@router.post("/register", description="Creates a new user account with the provided data and returns an access token for authentication.")
+@router.post("/register", description="Creates a new user account and returns an access token.")
 def register_user(db: db_dependency):
+    # Registration logic here
     pass
 
-
-@router.post("/login", description="Authenticates a user with their email and password. Returns an access token if the credentials are correct.")
+@router.post("/login", description="Authenticates a user and returns an access token.")
 def login_user(db: db_dependency):
+    # Login logic here
     pass
 
-
-@router.post("/logout", description="Authenticates a user with their email and password. Returns an access token if the credentials are correct.")
+@router.post("/logout", description="Logs out the user.")
 def logout_user(db: db_dependency):
+    # Logout logic here
     pass
