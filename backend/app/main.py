@@ -12,7 +12,8 @@ from .routes.products import router as products_router
 # models.Base.metadata.create_all(bind=engine)
 
 origins = [
-    "http://localhost:3000",
+    # "http://localhost:3000",
+    "http://52.53.186.174",
 ]
 
 app = FastAPI(
