@@ -50,16 +50,19 @@ jobs:
 
       - name: Run Backend Container
         env:
-          APP_ENV: production
+          SQLALCHEMY_DATABASE_URL: ${{ secrets.SQLALCHEMY_DATABASE_URL }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          ALGORITHM: ${{ secrets.ALGORITHM }}
+          ACCESS_TOKEN_EXPIRE_MINUTES: ${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }}
+
         run: |
           docker run -d \
             --name backend \
             --network app_network \
-            -e APP_ENV=${APP_ENV} \
+            -e SQLALCHEMY_DATABASE_URL=${SQLALCHEMY_DATABASE_URL} \
             -e SECRET_KEY=${SECRET_KEY} \
-            -e DATABASE_URL=${DATABASE_URL} \
+            -e ALGORITHM=${ALGORITHM} \
+            -e ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES} \
             backend
 
       - name: Run Frontend Container (Production)

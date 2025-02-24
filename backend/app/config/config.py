@@ -6,11 +6,11 @@ load_dotenv()
 
 def get_env_variable(name, required=True):
     value = os.getenv(name)
+    if required and value is None:
+        raise ValueError(f"Missing required environment variable: {name}")
     print(f"{name}:", value)
     return value
 
-# Determine if the app is in testing mode
-# TESTING = os.getenv("TESTING", "False").lower() == "true"
 
 SQLALCHEMY_DATABASE_URL = get_env_variable("SQLALCHEMY_DATABASE_URL")
 SECRET_KEY = get_env_variable("SECRET_KEY")
