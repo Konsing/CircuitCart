@@ -6,8 +6,6 @@ load_dotenv()
 
 def get_env_variable(name, required=True):
     value = os.getenv(name)
-    if required and value is None:
-        raise ValueError(f"Missing required environment variable: {name}")
     print(f"{name}:", value)
     return value
 
