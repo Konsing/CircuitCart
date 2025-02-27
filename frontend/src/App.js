@@ -1,28 +1,22 @@
-import React, { useEffect, useState } from 'react';
+// App.js
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Outlet, Link } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import ProductsPage from './pages/ProductsPage';
+import CartPage from './pages/CartPage';
+import NotFoundPage from './pages/NotFoundPage';
 import './App.css';
 
 function App() {
-  const [health, setHealth] = useState(null);
-
-  useEffect(() => {
-    // Fetch the backend health endpoint using the environment variable
-    fetch(`${process.env.REACT_APP_API_URL}/health/system_status`)
-      .then(response => response.json())
-      .then(data => setHealth(data))
-      .catch(error => console.error('Error fetching health:', error));
-  }, []);
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Welcome to CircuitCart</h1>
-        {health ? (
-          <p>Backend Health: {health.status}</p>
-        ) : (
-          <p>Loading backend status...</p>
-        )}
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Router>
   );
 }
 
