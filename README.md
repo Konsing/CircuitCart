@@ -69,30 +69,11 @@ ACCESS_TOKEN_EXPIRE_MINUTES=
 When developing locally, please note the following:
 - **Configuration Files:** Update `main.py` and `nginx.conf` to reflect your local development environment. These files should be adjusted when transitioning from local testing to production deployment.
 - **Environment Settings:** Ensure that the settings in your `.env` files match your current environment, and double-check configurations before pushing to production.
-
----
-
-## 🚀 Installation & Setup
-
-### Prerequisites
-- An active AWS account.
-- Docker installed on your development machine.
-
-### Setup Instructions
-1. **Clone the Repository:**
+- **Docker Command (Local Testing):**
+   To run the full stack using Docker Compose, use the following command:
    ```bash
-   git clone https://github.com/yourusername/circuit-cart.git
-   cd circuit-cart
+   docker-compose up -build
    ```
-
-2. **Environment Configuration:**
-   - Create and configure the `.env` files in both the frontend and backend folders using the templates provided above.
-
-3. **Deploy with Docker:**
-   - Instead of running manual installation commands, use the provided Dockerfile.
-   - For continuous integration and deployment, refer to the `aws.yaml` file in the `.github/workflows/` folder.
-   - To run the Docker container locally:
-     ```bash
-     docker build -t circuit-cart .
-     docker run -p 80:80 circuit-cart
-     ```
+   This will start both the backend and frontend services in Docker containers.
+   
+---
