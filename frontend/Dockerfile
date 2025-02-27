@@ -19,5 +19,5 @@ ENV REACT_APP_API_URL=${REACT_APP_API_URL}
 RUN npm run build
 # Use "serve" package to serve static files
 RUN npm install -g serve
-EXPOSE 5000
-CMD [ "serve", "-s", "build", "-l", "5000" ]
+EXPOSE 3000
+CMD [ "serve", "-s", "build", "-l", "3000" ]
