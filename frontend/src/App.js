@@ -1,11 +1,11 @@
 // App.js
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Outlet, Link } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import ProductsPage from './pages/ProductsPage';
-import CartPage from './pages/CartPage';
-import NotFoundPage from './pages/NotFoundPage';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './Pages/HomePage';
+import ProductsPage from './Pages/ProductsPage';
+import CartPage from './Pages/CartPage';
+import NotFoundPage from './Pages/NotFoundPage';
+import './Styles/Global.css';
 
 function App() {
   return (

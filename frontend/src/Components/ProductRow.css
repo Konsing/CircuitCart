@@ -1,0 +1,25 @@
+/* ProductRow.css */
+.product-row {
+    display: flex;
+    align-items: flex-start;
+    margin: 40px 0;
+  }
+  
+  .row-header {
+    min-width: 150px;
+    padding-right: 20px;
+  }
+  
+  .row-title {
+    font-size: 1.5rem;
+    margin: 0;
+    color: #333;
+  }
+  
+  .row-products {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 10px;
+  }
+  

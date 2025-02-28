@@ -69,11 +69,18 @@ ACCESS_TOKEN_EXPIRE_MINUTES=
 When developing locally, please note the following:
 - **Configuration Files:** Update `main.py` and `nginx.conf` to reflect your local development environment. These files should be adjusted when transitioning from local testing to production deployment.
 - **Environment Settings:** Ensure that the settings in your `.env` files match your current environment, and double-check configurations before pushing to production.
-- **Docker Command (Local Testing):**
+- **Frontend Dependencies:** Before running the frontend, navigate to the `frontend` folder and install dependencies using:
+   ```bash
+   cd frontend
+   npm install
+   ```
+   This ensures that all required packages are available for development.
+- **Docker Command (Local Testing):**  
    To run the full stack using Docker Compose, use the following command:
    ```bash
-   docker-compose up -build
+   docker-compose up --build
    ```
    This will start both the backend and frontend services in Docker containers.
-   
+
 ---
+
